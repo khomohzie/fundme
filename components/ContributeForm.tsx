@@ -5,6 +5,7 @@ import { Button, Message } from "semantic-ui-react";
 import Campaign from "../utils/campaign";
 import web3 from "../utils/web3";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 interface Props {
 	address: string;
@@ -31,7 +32,12 @@ const ContributeForm: NextPage<Props> = ({ address }) => {
 
 			Router.replace("/campaigns/[campaign]", `/campaigns/${address}`);
 
-			Router.push("/");
+			// Router.push("/");
+			setIsLoading(false);
+			setMinimumContribution("");
+			toast.success(
+				`Contribution of ${minimumContribution} ether successful.`
+			);
 		} catch (err) {
 			const error = err as Error;
 			setError(error.message);

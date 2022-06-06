@@ -44,8 +44,11 @@ contract Campaign {
             "The amount entered is less than the minimum contribution."
         );
 
+        if (!approvers[msg.sender]) {
+            approversCount++;
+        }
+
         approvers[msg.sender] = true;
-        approversCount++;
     }
 
     function createRequest(
