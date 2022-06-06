@@ -1,9 +1,12 @@
 import web3 from "../web3";
 import { AbiItem } from "web3-utils";
-import { abi } from "./build/CampaignFactory.json";
+import campaignFactory from "./build/CampaignFactory.json";
 
-const contractAddress = "0xdb74df105bf13730e5afc0cbfc03cb7d502140ab";
+const contractAddress = "0x15438efA99c4753FcdC7588bF3f2E8a5ed4e5e94";
 
-const instance = new web3.eth.Contract(abi as AbiItem[], contractAddress);
+const instance = new web3.eth.Contract(
+	campaignFactory.abi as AbiItem[],
+	contractAddress
+);
 
 export default instance;

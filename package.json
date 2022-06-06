@@ -33,6 +33,7 @@
   "dependencies": {
     "@metamask/providers": "^8.1.1",
     "@truffle/hdwallet-provider": "^2.0.8",
+    "babel-plugin-styled-components": "^2.0.7",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
     "fs-extra": "^10.1.0",
@@ -42,15 +43,51 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-toastify": "^9.0.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.1.2",
     "solc": "^0.8.14-fixed",
+    "styled-components": "^5.3.5",
     "web3": "^1.7.3"
   },
   "devDependencies": {
     "@types/node": "17.0.36",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.5",
+    "@types/styled-components": "^5.1.25",
     "eslint": "8.16.0",
     "eslint-config-next": "12.1.6",
     "typescript": "4.7.2"
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": false
+            }
+          ]
+        ]
+      }
+    }
   }
 }

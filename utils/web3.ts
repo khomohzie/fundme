@@ -4,21 +4,49 @@ import { config } from "../config";
 
 let web3: Web3;
 
-if (typeof window.ethereum !== undefined) {
-	const { ethereum } = window;
+if (
+	typeof window !== "undefined" &&
+	(typeof window.ethereum !== "undefined" ||
+		typeof window.web3 !== "undefined")
+) {
+	if (typeof window.ethereum !== "undefined") {
+		const { ethereum } = window;
 
-	web3 = new Web3(ethereum);
+		web3 = new Web3(ethereum);
 
-	// Request approval from the user to use an ethereum address they can be identified by.
-	ethereum
-		.enable()
-		.then((_accounts: any) => {})
-		.catch((error: any) => {
-			console.error(error);
-			toast.error(
-				"Sorry, this application requires user approval to function correctly."
-			);
+		const connectBtn = document.getElementById("connect_btn");
+
+		connectBtn?.addEventListener("click", function () {
+			// Request approval from the user to use an ethereum address they can be identified by.
+			try {
+				ethereum
+					.request({
+						method: "eth_requestAccounts",
+					})
+					.then((_accounts: any) => {
+						window.location.reload();
+					})
+					.catch((error: any) => {
+						console.error(error);
+						toast.error(
+							"Sorry, this application requires user approval to function correctly."
+						);
+					});
+			} catch (error: any) {
+				if (error.code === 4001) {
+					// User rejected request.
+					console.error(error);
+					toast.error(
+						"Sorry, this application requires user approval to function correctly."
+					);
+				}
+
+				console.error(error);
+			}
 		});
+	} else {
+		web3 = new Web3(window.web3.currentProvider);
+	}
 } else {
 	// We are on the server OR MetaMask is not running.
 	const { providerUrl } = config;
