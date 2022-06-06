@@ -14,6 +14,14 @@ if (
 
 		web3 = new Web3(ethereum);
 
+		if (typeof ethereum.autoRefreshOnNetworkChange !== "undefined") {
+			ethereum.autoRefreshOnNetworkChange = false;
+		}
+
+		ethereum.on("chainChanged", () => {
+			document.location.reload();
+		});
+
 		const connectBtn = document.getElementById("connect_btn");
 
 		connectBtn?.addEventListener("click", function () {
@@ -43,6 +51,11 @@ if (
 
 				console.error(error);
 			}
+		});
+
+		web3.eth.net.getNetworkType().then((networkInformation: string) => {
+			if (networkInformation !== "rinkeby")
+				toast.warning("Please connect to rinkeby network");
 		});
 	} else {
 		web3 = new Web3(window.web3.currentProvider);
