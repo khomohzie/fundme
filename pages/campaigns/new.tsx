@@ -4,7 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Button, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
-import factory from "../../utils/ethereum/factory";
+import factory from "../../utils/factory";
 import web3 from "../../utils/web3";
 import Router from "next/router";
 
@@ -51,7 +51,7 @@ const CampaignNew: NextPage = () => {
 						<InputContainer>
 							<Input
 								id="wei"
-								placeholder="Ensure you enter a minimum value of 100"
+								placeholder="Enter a minimum value for contribution."
 								value={minimumContribution}
 								onChange={(e) =>
 									setMinimumContribution(e.target.value)
